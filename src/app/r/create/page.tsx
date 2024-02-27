@@ -1,13 +1,16 @@
 "use client";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import { CreateSubredditPayload } from "@/lib/validators/subredit";
 import { toast } from "@/hooks/use-toast";
 import { useCustomToast } from "@/hooks/use-custom-toast";
+
+import { CreateSubredditPayload } from "@/lib/validators/subredit";
+
+import axios, { AxiosError } from "axios";
+
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 
 const Page = () => {
   const [input, setInput] = useState<string>("");
@@ -45,6 +48,15 @@ const Page = () => {
           return loginToast();
         }
       }
+
+      toast({
+        title: "There was an error",
+        description: "Could not create subreddit.",
+        variant: "destructive",
+      });
+    },
+    onSuccess: (data) => {
+      router.push(`/r/${data}`);
     },
   });
 
