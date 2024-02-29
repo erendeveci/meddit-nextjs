@@ -19,8 +19,9 @@ interface PostProps {
   currentVote?: PartialVote;
 }
 
-const Post: React.FC<PostProps> = ({ subredditName, post, commentAmt, votesAmt: _votesAmt , currentVote}) => {
+const Post: React.FC<PostProps> = ({ subredditName, post, commentAmt, votesAmt: _votesAmt, currentVote }) => {
   const pRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="rounded-md bg-white shadow">
       <div className="px-6 py-4 flex justify-between">
@@ -38,7 +39,7 @@ const Post: React.FC<PostProps> = ({ subredditName, post, commentAmt, votesAmt: 
             <span>Posted by u/{post.author.name} </span>
             {formatTimeToNow(new Date(post.createdAt))}
           </div>
-          <a href={`r/${subredditName}/post/${post.id} `}>
+          <a href={`r/${subredditName}/post/${post.id}`}>
             <p className="text-lg font-semibold py-2 leading-6 text-gray-900">{post.title}</p>
           </a>
 
