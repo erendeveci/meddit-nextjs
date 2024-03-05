@@ -11,6 +11,8 @@ interface PostVoteServerProps {
   getData?: () => Promise<(Post & { votes: Vote[] }) | null>;
 }
 
+const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 const PostVoteServer = async ({ postId, initialVotesAmt, initialVote, getData }: PostVoteServerProps) => {
   const session = await getServerSession();
 
@@ -18,6 +20,7 @@ const PostVoteServer = async ({ postId, initialVotesAmt, initialVote, getData }:
   let _currentVote: VoteType | null | undefined = undefined;
 
   if (getData) {
+    await wait(2000);
     const post = await getData();
     if (!post) return notFound();
 

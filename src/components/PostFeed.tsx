@@ -7,6 +7,7 @@ import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Post from "./Post";
+import { Loader2 } from "lucide-react";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -67,7 +68,13 @@ const PostFeed: React.FC<PostFeedProps> = ({ initialPosts, subredditName }) => {
           return <Post key={post.id} currentVote={currentVote} votesAmt={votesAmt} commentAmt={post.comments.length} post={post} subredditName={post.subreddit.name} />;
         }
       })}
-      {isFetchingNextPage && <p>Loading</p>}
+
+      {isFetchingNextPage && (
+        <div className="w-full flex items-center justify-center text-center text-zinc-900 text-lg font-medium">
+          {" "}
+          <Loader2 className="animate-spin h-6 w-6" />
+        </div>
+      )}
     </ul>
   );
 };
