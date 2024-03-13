@@ -23,25 +23,25 @@ const Post: React.FC<PostProps> = ({ subredditName, post, commentAmt, votesAmt: 
   const pRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="rounded-md bg-white shadow">
+    <div className="rounded-md bg-white shadow  animate-fade animate-once animate-duration animate-ease-linear">
       <div className="px-6 py-4 flex justify-between">
         <PostVoteClient postId={post.id} initialVote={currentVote?.type} initialVotesAmt={_votesAmt} />
         <div className="flex-1">
           <div className="max-h-40 mt-1 text-xs text-gray-500">
             {subredditName ? (
               <React.Fragment>
-                <a className="underline text-zinc-900 text-sm underline-offset-2" href={`/r/${subredditName}`}>
+                <Link className="underline text-zinc-900 text-sm underline-offset-2" href={`/r/${subredditName}`}>
                   r/{subredditName}
-                </a>
+                </Link>
                 <span className="px-1">•</span>
               </React.Fragment>
             ) : null}
-            <span>Posted by u/{post.author.name} </span>
+            <span>Posted by u/{post.author.username} </span>
             {formatTimeToNow(new Date(post.createdAt))}
           </div>
-          <a href={`r/${subredditName}/post/${post.id}`}>
+          <Link href={`r/${subredditName}/post/${post.id}`}>
             <p className="text-lg font-semibold py-2 leading-6 text-gray-900">{post.title}</p>
-          </a>
+          </Link>
 
           <div className="relative text-sm max-h-40 w-full overflow-clip" ref={pRef}>
             <EditorOutput content={post.content} />

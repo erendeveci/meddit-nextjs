@@ -13,6 +13,7 @@ import { Textarea } from "../ui/Textarea";
 import { useMutation } from "@tanstack/react-query";
 import { CommentRequest } from "@/lib/validators/comment";
 import axios from "axios";
+import { toast } from "@/hooks/use-toast";
 
 type ExtendedComment = Comment & {
   votes: CommentVote[];
@@ -42,6 +43,17 @@ const PostComment: React.FC<PostCommentProps> = ({ comment, votesAmt, currentVot
 
       const { data } = await axios.patch(`/api/subreddit/post/comment`, payload);
       return data;
+    },
+    onError: () => {
+      return toast({
+        title: "Something went wrong",
+        description: "Comment wasn't posted successfully, please try again.",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      router.refresh();
+      setIsReplying(false);
     },
   });
   return (
@@ -75,12 +87,15 @@ const PostComment: React.FC<PostCommentProps> = ({ comment, votesAmt, currentVot
         </Button>
 
         {isReplying ? (
-          <div className="grid w-full gap-1.5 animate-fade-up animate-once animate-ease-linear">
+          <div className="grid w-full gap-1.5 animate-fade animate-once animate-duration animate-ease-linear">
             <Label htmlFor="comment">Your Comment</Label>
             <div className="mt-2">
               <Textarea id="comment" value={input} onChange={(e) => setInput(e.target.value)} rows={1} placeholder="What are your thoughts?" />
             </div>
-            <div className="mt-2 flex justify-end">
+            <div className="mt-2 flex justify-end gap-2">
+              <Button tabIndex={-1} variant="subtle" onClick={() => setIsReplying(false)}>
+                Cancel
+              </Button>
               <Button
                 onClick={() => postComment({ postId, text: input, replyToId: comment.replyToId ?? comment.id })}
                 disabled={isLoading || input.length === 0}

@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/Toaster";
 import Providers from "@/components/Providers";
 
 export const metadata = {
-  title: "Breadit",
+  title: "Meddit",
   description: "A Reddit clone built with Next.js and TypeScript.",
 };
 
@@ -14,8 +14,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children, authModal }: { children: React.ReactNode; authModal: React.ReactNode }) {
   return (
-    <html lang="en" className={cn("bg-white text-slate-900 antialiased light", inter.className)}>
-      <body className="min-h-screen pt-12 bg-slate-50 antialiased">
+    <html lang="en" className={cn(" text-white antialiased light", inter.className)}>
+      <body className="min-h-screen pt-12  antialiased ">
         <Providers>
           {/* @ts-expect-error server component */}
           <Navbar />
