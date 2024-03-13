@@ -1,6 +1,6 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { redis } from "@/lib/redis";
+ 
 import { PostVoteValidator } from "@/lib/validators/vote";
 import { CachedPost } from "@/types/redis";
 import { z } from "zod";
@@ -70,7 +70,7 @@ export async function PATCH(req: Request) {
             createdAt: post.createdAt,
           };
 
-          await redis.hset(`post:${postId}`, cachePayload);
+          
         }
 
         return new Response("OK");
@@ -104,7 +104,7 @@ export async function PATCH(req: Request) {
           createdAt: post.createdAt,
         };
 
-        await redis.hset(`post:${postId}`, cachePayload);
+       
       }
 
       return new Response("OK");
@@ -134,7 +134,7 @@ export async function PATCH(req: Request) {
         createdAt: post.createdAt,
       };
 
-      await redis.hset(`post:${postId}`, cachePayload);
+      
     }
 
     return new Response("OK");
